@@ -4,6 +4,7 @@ import org.jetbrains.dokka.DokkaSourceSetID
 import org.jetbrains.dokka.base.testApi.testRunner.BaseAbstractTest
 import org.junit.jupiter.api.Test
 import utils.*
+import java.lang.IllegalStateException
 import kotlin.test.assertFalse
 
 class SignatureTest : BaseAbstractTest() {
@@ -11,7 +12,7 @@ class SignatureTest : BaseAbstractTest() {
         sourceSets {
             sourceSet {
                 sourceRoots = listOf("src/")
-                classpath = listOf(commonStdlibPath!!)
+                classpath = listOf(commonStdlibPath ?: throw IllegalStateException("Common stdlib is not found"), jvmStdlibPath ?: throw IllegalStateException("JVM stdlib is not found"))
                 externalDocumentationLinks = listOf(stdlibExternalDocumentationLink)
             }
         }
